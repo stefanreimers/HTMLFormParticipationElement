@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Submission</title>
+</head>
+<body>
+  
+  <script type="module" >
+
+    import { default as FormElement } from '../index.js';
+
+    class CustomInput extends FormElement {
+
+      constructor(){
+        super();
+
+      }
+
+      get template(){
+        return `<div style="border: 1px solid red; display:block"></div>`
+      }
+
+      connectedCallback(){
+        this.innerHTML = this.template;
+      }
+
+    }
+
+    window.customElements.define('custom-input', CustomInput);
+
+  </script>
+
+  <form id="formValues">
+    <input type="text" name="native" value="abc">
+    <custom-input name="custom" value="def"></custom-input>
+    <custom-input name="custom2" required></custom-input>
+    <div name="dumb" value="ghi"></div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+
+    const form = document.getElementById('formValues');
+
+    console.log('form', form);
+
+    form.addEventListener('submit', function(evt) {
+
+      let formdata = new FormData(evt.target)
+
+      evt.preventDefault();
+      console.log(evt, Array.from(formdata.values()));
+      return false;
+    })
+
+  </script>
+
+
+</body>
+</html>

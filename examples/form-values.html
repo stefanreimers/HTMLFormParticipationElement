@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Values</title>
+</head>
+<body>
+  
+  <script type="module" >
+
+    import { default as FormElement } from '../index.js';
+
+    class CustomInput extends FormElement {
+
+      constructor(){
+        super();
+
+      }
+
+      get template(){
+        return `<div style="border: 1px solid red; display:block"></div>`
+      }
+
+      connectedCallback(){
+        console.log('is connected');
+        this.innerHTML = this.template;
+      }
+
+    }
+
+    window.customElements.define('custom-input', CustomInput);
+
+  </script>
+
+  <form id="formValues">
+    <input type="text" name="native" value="abc">
+    <custom-input name="custom" value="def"></custom-input>
+    <custom-input name="custom2" required></custom-input>
+    <div name="dumb" value="ghi"></div>
+  </form>
+
+
+</body>
+</html>
