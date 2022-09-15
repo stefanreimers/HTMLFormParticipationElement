@@ -37,9 +37,11 @@
   <form id="formValues">
     <input type="text" name="native" value="abc">
     <custom-input name="custom" value="def"></custom-input>
-    <custom-input name="custom2" required></custom-input>
+    <custom-input name="custom2" value="ghi" required></custom-input>
     <div name="dumb" value="ghi"></div>
   </form>
+
+  <button onclick="console.log([...(new FormData(document.getElementById('formValues')))])">Log values</button>
 
 
 </body>

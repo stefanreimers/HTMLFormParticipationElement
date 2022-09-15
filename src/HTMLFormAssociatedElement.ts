@@ -32,7 +32,7 @@ export class HTMLFormAssociatedElement extends HTMLElement {
 
   get value() { return this.__value }
   set value(v) {
-    this.__onUpdateValue(v);
+    if(this.__onUpdateValue(v) !== false) this.setAttribute('value', v);;
   }
 
   get required(): boolean { return this.hasAttribute('required') }
@@ -43,9 +43,9 @@ export class HTMLFormAssociatedElement extends HTMLElement {
 
   __onUpdateValue(v: any) {
 
-    if (this.__value == v || this.matches(':disabled')) return;
+    if (this.__value == v || this.matches(':disabled')) return false;
 
-    if (!this.__onBeforeValueChange(v)) return;
+    if (!this.__onBeforeValueChange(v)) return false;
 
     this.__value = v;
 

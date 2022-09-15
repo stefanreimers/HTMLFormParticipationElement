@@ -18,7 +18,9 @@ export class HTMLFormAssociatedElement extends HTMLElement {
     }
     get value() { return this.__value; }
     set value(v) {
-        this.__onUpdateValue(v);
+        if (this.__onUpdateValue(v) !== false)
+            this.setAttribute('value', v);
+        ;
     }
     get required() { return this.hasAttribute('required'); }
     set required(v) {
@@ -29,9 +31,9 @@ export class HTMLFormAssociatedElement extends HTMLElement {
     }
     __onUpdateValue(v) {
         if (this.__value == v || this.matches(':disabled'))
-            return;
+            return false;
         if (!this.__onBeforeValueChange(v))
-            return;
+            return false;
         this.__value = v;
         //@ts-expect-error
         if ('setFormValue' in window.ElementInternals.prototype)
